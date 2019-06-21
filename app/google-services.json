@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "337939893784",
+    "firebase_url": "https://emotionalanalysis-f6698.firebaseio.com",
+    "project_id": "emotionalanalysis-f6698",
+    "storage_bucket": "emotionalanalysis-f6698.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:337939893784:android:b610c8828354b5a1",
+        "android_client_info": {
+          "package_name": "com.example.emotionalanalysis"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "337939893784-li60e1e7j7bn4hoqsids6nlin0tm2joe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.emotionalanalysis",
+            "certificate_hash": "735248f1cb34918223aa22643a47e7b2594a6b22"
+          }
+        },
+        {
+          "client_id": "337939893784-6s8dv8ek963p3bu227bdn72cje1o2r8r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2mDyp_gLT5UamyBo0r7VIpY6eE7VXZHw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "337939893784-6s8dv8ek963p3bu227bdn72cje1o2r8r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
