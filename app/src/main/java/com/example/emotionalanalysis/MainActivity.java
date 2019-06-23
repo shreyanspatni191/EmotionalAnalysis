@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void userLogin(){
-        String email = editTextEmail.getText().toString().trim();
+        final String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
         if(retrofit == null){
             retrofit = new Retrofit.Builder()
@@ -55,8 +55,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     progressDialog.hide();
                     Toast.makeText(MainActivity.this,String.valueOf(response.body().message), Toast.LENGTH_SHORT).show();
                     if(String.valueOf(response.body().error) == "false"){
+
+                        Intent i = new Intent(MainActivity.this, TestPage.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("email",email);
+                        i.putExtras(bundle);
                         finish();
-                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                        startActivity(i);
                     }
 //                    else{
 //                        finish();

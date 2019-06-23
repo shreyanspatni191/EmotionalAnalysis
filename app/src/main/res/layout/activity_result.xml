@@ -4,14 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Session">
+    tools:context=".Result">
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPager"
-        android:layout_width="404dp"
-        android:layout_height="401dp"
-        android:paddingHorizontal="40dp"
-        android:paddingTop="40dp"
-        tools:layout_editor_absoluteX="3dp"
-        tools:layout_editor_absoluteY="152dp"></androidx.viewpager.widget.ViewPager>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,9 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TestPage">
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    tools:context=".MainActivity">
+    <LinearLayout
+        android:id="@+id/linearLayoutRegister1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Test Place" />
+
+        <EditText
+            android:id="@+id/editTextTestPlace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Test Place" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Test Place Description" />
+
+        <EditText
+            android:id="@+id/editTextTestPlaceDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Test Place Description" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Test Ambience" />
+
+        <EditText
+            android:id="@+id/editTextTestAmbience"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Test Ambience" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Watch Number" />
+
+        <EditText
+            android:id="@+id/editTextWatchNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Watch Number" />
+
+
+
+    </LinearLayout>
+
+    <Button
+        android:layout_below="@+id/linearLayoutRegister1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/buttonStartTest"
+        android:text="START TEST" />
+
+</RelativeLayout>
