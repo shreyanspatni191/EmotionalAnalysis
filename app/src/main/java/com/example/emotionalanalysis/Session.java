@@ -33,8 +33,11 @@ public class Session extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_session);
 
+        Bundle bundle = getIntent().getExtras();
+        String email = bundle.getString("email");
+
         viewPager = findViewById(R.id.viewPager);
-        ImageAdapter adapter = new ImageAdapter(this);
+        ImageAdapter adapter = new ImageAdapter(this,email);
         viewPager.setAdapter(adapter);
 //        viewPager.setVisibility(View.INVISIBLE);
 

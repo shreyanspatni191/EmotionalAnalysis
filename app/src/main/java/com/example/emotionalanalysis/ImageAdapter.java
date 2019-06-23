@@ -20,7 +20,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
+import java.util.TimeZone;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,14 +36,19 @@ public class ImageAdapter extends PagerAdapter {
     Retrofit retrofit;
 
     private int count;
+    private String email;
     private Context mContext;
     private int[] mImageIds = new int[]{R.drawable.h1, R.drawable.h2};
 
     FirebaseStorage storage = FirebaseStorage.getInstance();
     Random random = new Random();
 
-    ImageAdapter(Context mContext){
+//    ImageAdapter(String email){
+//        this.email = email;
+//    }
+    ImageAdapter(Context mContext, String email){
         this.mContext = mContext;
+        this.email = email;
     }
 
     @Override
@@ -67,31 +75,37 @@ public class ImageAdapter extends PagerAdapter {
         GlideApp.with(mContext).load(storageRef).into(imageView);
         count++;
 
-        String imageName = "image" + id;
+        String imagename = "image" + id;
+
+        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        f.setTimeZone(TimeZone.getTimeZone("UTC"));
+        String starttime = f.format(new Date());
+
+        String endtime = starttime;
 
         // for testImageTable : insertion of each image desc into the table;
 
 //        if(retrofit==null) {
-//            retrofit = new Retrofit.Builder()
-//                    .baseUrl(Constants.ROOT_URL)
-//                    .addConverterFactory(GsonConverterFactory.create()).build();
-//            retrofit.create(ImageAdapterApi.class).testImage(imageName).enqueue(new Callback<ImageAdapterResponse>() {
-//
-//                @Override
-//                public void onResponse(Call<ImageAdapterResponse> call, Response<ImageAdapterResponse> response) {
-////                    Log.d("SUCCESS", "hahah ");
-////                    progressDialog.hide();
-//                    Log.d("SUCCESS", String.valueOf(response.body().message));
-////                    Toast.makeText(ImageAdapter.this, String.valueOf(response.body().message), Toast.LENGTH_LONG);
-//                }
-//
-//                @Override
-//                public void onFailure(Call<ImageAdapterResponse> call, Throwable t) {
-//                    Log.d("Faliure", "saddd");
-////                    progressDialog.hide();
-////                    Toast.makeText(ImageAdapter.this, t.getMessage(), Toast.LENGTH_LONG);
-//                }
-//            });
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(Constants.ROOT_URL)
+                    .addConverterFactory(GsonConverterFactory.create()).build();
+            retrofit.create(ImageAdapterApi.class).testImage(email,starttime,endtime,imagename).enqueue(new Callback<ImageAdapterResponse>() {
+
+                @Override
+                public void onResponse(Call<ImageAdapterResponse> call, Response<ImageAdapterResponse> response) {
+//                    Log.d("SUCCESS", "hahah ");
+//                    progressDialog.hide();
+                    Log.d("SUCCESS", String.valueOf(response.body().message));
+//                    Toast.makeText(ImageAdapter.this, String.valueOf(response.body().message), Toast.LENGTH_LONG);
+                }
+
+                @Override
+                public void onFailure(Call<ImageAdapterResponse> call, Throwable t) {
+                    Log.d("Faliure", "saddd");
+//                    progressDialog.hide();
+//                    Toast.makeText(ImageAdapter.this, t.getMessage(), Toast.LENGTH_LONG);
+                }
+            });
 
 //            finish();
 //            startActivity(new Intent(getApplicationContext(),MainActivity.class));
