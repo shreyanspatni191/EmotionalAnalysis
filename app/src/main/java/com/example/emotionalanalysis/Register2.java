@@ -5,8 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -20,6 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Register2 extends AppCompatActivity implements View.OnClickListener{
 
     Retrofit retrofit;
+    AutoCompleteTextView textView;
     private EditText editTextAge, editTextGender, editTextWeight, editTextHeight, editTextCountry;
     private Button buttonRegister;
 
@@ -34,12 +38,15 @@ public class Register2 extends AppCompatActivity implements View.OnClickListener
         editTextGender = (EditText)findViewById(R.id.editTextGender);
         editTextWeight = (EditText)findViewById(R.id.editTextWeight);
         editTextHeight = (EditText)findViewById(R.id.editTextHeight);
-        editTextCountry = (EditText)findViewById(R.id.editTextCountry);
+
+        editTextCountry = (AutoCompleteTextView)findViewById(R.id.editTextCountry);
+        textView = (AutoCompleteTextView) findViewById(R.id.editTextCountry);
 
         buttonRegister = (Button)findViewById(R.id.buttonRegister);
         progressDialog =  new ProgressDialog(this);
         buttonRegister.setOnClickListener(this);
     }
+    private static final String[] COUNTRIES = new String[] {"India","Norway","USA"};
 
     private void registerUser(){
         String age = editTextAge.getText().toString().trim();
@@ -48,7 +55,7 @@ public class Register2 extends AppCompatActivity implements View.OnClickListener
         String height = editTextHeight.getText().toString().trim();
         String country = editTextCountry.getText().toString().trim();
         Bundle bundle = getIntent().getExtras();
-//        UserInfo userInfo = new UserInfo();
+//      UserInfo userInfo = new UserInfo();
         String username = bundle.getString("username");
         String email = bundle.getString("email");
         String password = bundle.getString("password");
@@ -58,6 +65,10 @@ public class Register2 extends AppCompatActivity implements View.OnClickListener
 
         progressDialog.setMessage("Registering User...");
         progressDialog.show();
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line, COUNTRIES);
+        textView.setAdapter(adapter);
+
 
         if(retrofit==null) {
             retrofit = new Retrofit.Builder()

@@ -95,7 +95,7 @@ public class ImageAdapter extends PagerAdapter {
                 public void onResponse(Call<ImageAdapterResponse> call, Response<ImageAdapterResponse> response) {
 //                    Log.d("SUCCESS", "hahah ");
 //                    progressDialog.hide();
-                    Log.d("SUCCESS", String.valueOf(response.body().message));
+                    Log.d("HAHAHA", String.valueOf(response.body().message));
 //                    Toast.makeText(ImageAdapter.this, String.valueOf(response.body().message), Toast.LENGTH_LONG);
                 }
 

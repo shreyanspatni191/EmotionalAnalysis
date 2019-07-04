@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
+//import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,15 +34,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Typeface custom_font = Typeface.createFromAsset(getAssets(),"fonts/Lato-Light.ttf");
+
         editTextEmail = (EditText)findViewById(R.id.editTextEmail);
+        editTextEmail.setTypeface(custom_font);
+
         editTextPassword = (EditText)findViewById(R.id.editTextPassword);
+        editTextPassword.setTypeface(custom_font);
+
         textViewRegister = (TextView)findViewById(R.id.textViewRegister);
+        textViewRegister.setTypeface(custom_font);
 
         buttonLogin = (Button)findViewById(R.id.buttonLogin);
+        buttonLogin.setTypeface(custom_font);
+
         progressDialog = new ProgressDialog(this);
 
         buttonLogin.setOnClickListener(this);
         textViewRegister.setOnClickListener(this);
+
+
     }
 
     private void userLogin(){

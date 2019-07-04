@@ -1,16 +1,14 @@
 package com.example.emotionalanalysis;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class Register1 extends AppCompatActivity implements View.OnClickListener{
 
@@ -23,14 +21,30 @@ public class Register1 extends AppCompatActivity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register1);
 
+        Typeface custom_font = Typeface.createFromAsset(getAssets(),"fonts/Lato-Light.ttf");
+
+
         editTextUsername = (EditText)findViewById(R.id.editTextUsername);
+        editTextUsername.setTypeface(custom_font);
+
         editTextPassword = (EditText)findViewById(R.id.editTextPassword);
+        editTextPassword.setTypeface(custom_font);
+
         editTextFirstname = (EditText)findViewById(R.id.editTextFirstname);
+        editTextFirstname.setTypeface(custom_font);
+
         editTextMiddlename = (EditText)findViewById(R.id.editTextMiddlename);
+        editTextMiddlename.setTypeface(custom_font);
+
         editTextLastname = (EditText)findViewById(R.id.editTextLastname);
+        editTextLastname.setTypeface(custom_font);
+
         editTextEmail = (EditText)findViewById(R.id.editTextEmail);
+        editTextEmail.setTypeface(custom_font);
 
         buttonNext = (Button)findViewById(R.id.buttonNext);
+        buttonNext.setTypeface(custom_font);
+
         progressDialog = new ProgressDialog(this);
 
         buttonNext.setOnClickListener(this);
