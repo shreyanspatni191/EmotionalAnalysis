@@ -30,6 +30,7 @@ public class Session extends AppCompatActivity {
     Timer timer = new Timer();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+//        getActionBar().hide();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_session);
 
@@ -52,6 +53,12 @@ public class Session extends AppCompatActivity {
                 @Override
                 public void run() {
                     int turn = Session.this.viewPager.getCurrentItem();
+                    try {
+                        Log.d("SLEEP", "OhYeah");
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     Log.d("ITEM", String.valueOf(turn));
                     switch (turn) {
 //                        case -1:
@@ -73,6 +80,21 @@ public class Session extends AppCompatActivity {
                             Session.this.viewPager.setCurrentItem(5);
                             break;
                         case 5:
+                            Session.this.viewPager.setCurrentItem(6);
+                            break;
+                        case 6:
+                            Session.this.viewPager.setCurrentItem(7);
+                            break;
+                        case 7:
+                            Session.this.viewPager.setCurrentItem(8);
+                            break;
+                        case 8:
+                            Session.this.viewPager.setCurrentItem(9);
+                            break;
+                        case 9:
+                            Session.this.viewPager.setCurrentItem(10);
+                            break;
+                        case 10:
                             timer.cancel();
                             timer.purge();
 
@@ -120,8 +142,8 @@ public class Session extends AppCompatActivity {
                                 startActivity(new Intent(getApplicationContext(), Result.class));
                             }
                             break;
-                        case 6:
-                            Session.this.viewPager.setCurrentItem(7);
+                        case 11:
+                            Session.this.viewPager.setCurrentItem(12);
                             break;
                         default:
                             Session.this.viewPager.setCurrentItem(0);

@@ -54,8 +54,8 @@ public class ImageAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return 6;
-    }  //6 views displayed
+        return 12;
+    }  //6 normal views displayed + 6 neutral views
 
     @Override
     public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
@@ -66,45 +66,46 @@ public class ImageAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
 
-        int id = 1 + random.nextInt(6);
-        String base = "image" + id + ".jpg";
-        Log.d("IMAGE:", base );
-        ImageView imageView = new ImageView(mContext);
+        Log.d("POSII", String.valueOf(position));
+        if(position%2!=0) {
+            int id = 1 + random.nextInt(6);
+            String base = "image" + id + ".jpg";
+            Log.d("IMAGE:", base);
+            ImageView imageView = new ImageView(mContext);
 //        imageView.animate().rotation(90).setDuration(0);
-        StorageReference storageRef = storage.getReferenceFromUrl("gs://emotionalanalysis-f6698.appspot.com/").child(base);
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            StorageReference storageRef = storage.getReferenceFromUrl("gs://emotionalanalysis-f6698.appspot.com/").child(base);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 //        imageView.setRotation(90F);
-        container.addView(imageView,0);
-        GlideApp.with(mContext).load(storageRef).into(imageView);
-        count++;
+            container.addView(imageView, 0);
+            GlideApp.with(mContext).load(storageRef).into(imageView);
+            count++;
 
-        String imagename = "image" + id;
+            String imagename = "image" + id;
 
-        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        f.setTimeZone(TimeZone.getTimeZone("UTC"));
-        String starttime = f.format(new Date());
+            SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            f.setTimeZone(TimeZone.getTimeZone("UTC"));
+            String starttime = f.format(new Date());
 
-        String endtime;
+            String endtime;
 //        Date currentTime = Calendar.getInstance().getTime();
 //        Log.d("TIME", String.valueOf(currentTime));
 
 
-        //endtime calculation (starttime + 7)
+            //endtime calculation (starttime + 7)
 
-        long milis = System.currentTimeMillis();
-        int secs = (int) (milis/1000);
-        secs += 7;
-        endtime = f.format(new Date(secs*1000L));
+            long milis = System.currentTimeMillis();
+            int secs = (int) (milis / 1000);
+            secs += 7;
+            endtime = f.format(new Date(secs * 1000L));
 
 
-
-        // for testImageTable : insertion of each image desc into the table;
+            // for testImageTable : insertion of each image desc into the table;
 
 //        if(retrofit==null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(Constants.ROOT_URL)
                     .addConverterFactory(GsonConverterFactory.create()).build();
-            retrofit.create(ImageAdapterApi.class).testImage(email,starttime,endtime,imagename).enqueue(new Callback<ImageAdapterResponse>() {
+            retrofit.create(ImageAdapterApi.class).testImage(email, starttime, endtime, imagename).enqueue(new Callback<ImageAdapterResponse>() {
 
                 @Override
                 public void onResponse(Call<ImageAdapterResponse> call, Response<ImageAdapterResponse> response) {
@@ -129,9 +130,75 @@ public class ImageAdapter extends PagerAdapter {
 //        if(count == 6){
 //            return -1;
 //        }
-        Log.d("COUNT", String.valueOf(count));
-        return imageView;
+            Log.d("COUNT", String.valueOf(count));
+            return imageView;
+        }
+        else{
+//            int id = 1 + random.nextInt(6);
+            String base = "neutral.jpg";
+            Log.d("IMAGE:", base);
+            ImageView imageView = new ImageView(mContext);
+//            imageView.animate().rotation(90).setDuration(0);
+            StorageReference storageRef = storage.getReferenceFromUrl("gs://emotionalanalysis-f6698.appspot.com/").child(base);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//          imageView.setRotation(90F);
+            container.addView(imageView, 0);
+            GlideApp.with(mContext).load(storageRef).into(imageView);
+            count++;
 
+            String imagename = "neutral";
+
+            SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            f.setTimeZone(TimeZone.getTimeZone("UTC"));
+            String starttime = f.format(new Date());
+
+            String endtime;
+//        Date currentTime = Calendar.getInstance().getTime();
+//        Log.d("TIME", String.valueOf(currentTime));
+
+
+            //endtime calculation (starttime + 7)
+
+            long milis = System.currentTimeMillis();
+            int secs = (int) (milis / 1000);
+            secs += 7;
+            endtime = f.format(new Date(secs * 1000L));
+
+
+            // for testImageTable : insertion of each image desc into the table;
+
+//        if(retrofit==null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(Constants.ROOT_URL)
+                    .addConverterFactory(GsonConverterFactory.create()).build();
+            retrofit.create(ImageAdapterApi.class).testImage(email, starttime, endtime, imagename).enqueue(new Callback<ImageAdapterResponse>() {
+
+                @Override
+                public void onResponse(Call<ImageAdapterResponse> call, Response<ImageAdapterResponse> response) {
+//                    Log.d("SUCCESS", "hahah ");
+//                    progressDialog.hide();
+                    Log.d("HAHAHA", String.valueOf(response.body().message));
+//                    Toast.makeText(ImageAdapter.this, String.valueOf(response.body().message), Toast.LENGTH_LONG);
+                }
+
+                @Override
+                public void onFailure(Call<ImageAdapterResponse> call, Throwable t) {
+                    Log.d("Faliure", "saddd");
+//                    progressDialog.hide();
+//                    Toast.makeText(ImageAdapter.this, t.getMessage(), Toast.LENGTH_LONG);
+                }
+            });
+
+//            finish();
+//            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+//        }
+
+//        if(count == 6){
+//            return -1;
+//        }
+            Log.d("COUNT", String.valueOf(count));
+            return imageView;
+        }
     }
 
     @Override
