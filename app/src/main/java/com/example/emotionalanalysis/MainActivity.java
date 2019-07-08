@@ -9,6 +9,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.provider.SyncStateContract;
 //import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -77,10 +78,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         finish();
                         startActivity(i);
                     }
-//                    else{
-//                        finish();
-//                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
-//                    }
+                    else{
+//                        Log.d("haga", "onResponse:");
+                        Toast.makeText(MainActivity.this,"Invalid Login Credentials", Toast.LENGTH_SHORT).show();
+                        finish();
+                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                    }
                 }
 
                 @Override

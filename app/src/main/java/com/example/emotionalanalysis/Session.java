@@ -115,7 +115,7 @@ public class Session extends AppCompatActivity {
                                     }
                                 });
 
-
+                                Log.d("DEAD", "MELA");
                                 finish();
                                 startActivity(new Intent(getApplicationContext(), Result.class));
                             }

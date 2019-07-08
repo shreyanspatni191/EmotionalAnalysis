@@ -21,6 +21,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 import java.util.TimeZone;
@@ -69,8 +70,10 @@ public class ImageAdapter extends PagerAdapter {
         String base = "image" + id + ".jpg";
         Log.d("IMAGE:", base );
         ImageView imageView = new ImageView(mContext);
+//        imageView.animate().rotation(90).setDuration(0);
         StorageReference storageRef = storage.getReferenceFromUrl("gs://emotionalanalysis-f6698.appspot.com/").child(base);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//        imageView.setRotation(90F);
         container.addView(imageView,0);
         GlideApp.with(mContext).load(storageRef).into(imageView);
         count++;
@@ -81,7 +84,19 @@ public class ImageAdapter extends PagerAdapter {
         f.setTimeZone(TimeZone.getTimeZone("UTC"));
         String starttime = f.format(new Date());
 
-        String endtime = starttime;
+        String endtime;
+//        Date currentTime = Calendar.getInstance().getTime();
+//        Log.d("TIME", String.valueOf(currentTime));
+
+
+        //endtime calculation (starttime + 7)
+
+        long milis = System.currentTimeMillis();
+        int secs = (int) (milis/1000);
+        secs += 7;
+        endtime = f.format(new Date(secs*1000L));
+
+
 
         // for testImageTable : insertion of each image desc into the table;
 

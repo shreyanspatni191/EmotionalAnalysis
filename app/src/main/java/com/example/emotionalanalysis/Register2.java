@@ -1,9 +1,11 @@
 package com.example.emotionalanalysis;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.SyncStateContract;
 import android.util.Log;
@@ -20,6 +22,20 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
 public class Register2 extends AppCompatActivity implements View.OnClickListener{
 
     Retrofit retrofit;
@@ -29,10 +45,15 @@ public class Register2 extends AppCompatActivity implements View.OnClickListener
 
     private ProgressDialog progressDialog;
 
+    private FirebaseAuth mAuth;
+    private DatabaseReference databaseReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register2);
+
+        mAuth = FirebaseAuth.getInstance();
 
         editTextAge = (EditText)findViewById(R.id.editTextAge);
         editTextGender = (EditText)findViewById(R.id.editTextGender);
@@ -48,12 +69,85 @@ public class Register2 extends AppCompatActivity implements View.OnClickListener
     }
     private static final String[] COUNTRIES = new String[] {"India","Norway","USA"};
 
+//    private void sendEmailVerification(){
+//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//        if(user!=null){
+//            user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+//                @Override
+//                public void onComplete(Task<Void> task) {
+//                    if(task.isSuccessful()){
+////                        Snackbar.make(getWindow().getDecorView(), "Verify your email-id", Snackbar.LENGTH_LONG).show();
+//                        FirebaseAuth.getInstance().signOut();
+//                    }
+//
+//                }
+//            });
+//        }
+//    }
+//
+//
+//    private void verifyRegistration(String email, String password){
+//        final ProgressDialog dialog = new ProgressDialog(this);
+//        dialog.setMessage("Registering User");
+//        dialog.show();
+//        FirebaseApp.initializeApp(this);
+//        mAuth = FirebaseAuth.getInstance();
+//        databaseReference = FirebaseDatabase.getInstance().getReference();
+//        Task<AuthResult> authResultTask = mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+//            @Override
+//            public void onComplete(@NonNull Task<AuthResult> task) {
+//                if(task.isSuccessful()){
+//                    sendEmailVerification();
+////                    Snackbar.make(getWindow().getDecorView(), "Registered Successfully", Snackbar.LENGTH_LONG).show();
+//                    databaseReference = FirebaseDatabase.getInstance().getReference();
+//                    final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//                    FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+////                    storageReference = firebaseStorage.getReference(user.getUid());
+//
+////                    final StorageReference reference = storageReference.child(user.getUid()).child(imageUri.getLastPathSegment());
+////                    reference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+////                        @Override
+////                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+////                            Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
+////                            while (!urlTask.isSuccessful());
+////                            Uri downloadUrl = urlTask.getResult();
+////                            signUpData.setAvatarUrl(downloadUrl.toString());
+////                            if(user!=null){
+////                                databaseReference.child("UserInfo").child(user.getUid()).setValue(signUpData);
+////                                dialog.dismiss();
+////                                onBackPressed();
+////                            }
+////                        }
+////                    }).addOnFailureListener(new OnFailureListener() {
+////                        @Override
+////                        public void onFailure(@NonNull Exception e) {
+////                            dialog.dismiss();
+////                        }
+////                    });
+//
+//
+//                }
+//
+//                else{
+//                Toast.makeText(Register2.this,task.getException().toString(),Toast.LENGTH_SHORT).show();
+//                dialog.dismiss();
+//
+//            }
+//        }
+//    });
+//}
+
     private void registerUser(){
         String age = editTextAge.getText().toString().trim();
         String gender = editTextGender.getText().toString().trim();
+        if(gender.contains("male"))gender = "1";
+        else gender = "2";
         String weight = editTextWeight.getText().toString().trim();
         String height = editTextHeight.getText().toString().trim();
         String country = editTextCountry.getText().toString().trim();
+        if(country.contains("India") || country.contains("india"))country = "1";
+        else if(country.contains("USA") || country.contains("usa") || country.contains("America"))country = "2";
+        else country = "3";
         Bundle bundle = getIntent().getExtras();
 //      UserInfo userInfo = new UserInfo();
         String username = bundle.getString("username");
@@ -62,6 +156,14 @@ public class Register2 extends AppCompatActivity implements View.OnClickListener
         String firstname = bundle.getString("firstname");
         String middlename = bundle.getString("middlename");
         String lastname = bundle.getString("lastname");
+
+        //verification
+
+//        verifyRegistration(email, password);
+
+
+        //done
+
 
         progressDialog.setMessage("Registering User...");
         progressDialog.show();
