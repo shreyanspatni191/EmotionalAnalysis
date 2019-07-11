@@ -6,6 +6,6 @@ import retrofit2.http.Query;
 
 public interface ImageAdapterApi {
     @POST("testImageInfo.php")
-    Call<ImageAdapterResponse> testImage(@Query("email")String email, @Query("starttime")String starttime,
-                                         @Query("endtime")String endtime, @Query("imagename") String imagename);
+    Call<ImageAdapterResponse> testImage(@Query("email")String email, @Query("starttime")String imgStartTime,
+                                         @Query("endtime")String imgEndTime, @Query("imagename") String imagename);
 }

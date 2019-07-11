@@ -17,11 +17,7 @@
             android:label="@string/title_activity_slider"
             android:screenOrientation="landscape"
             android:theme="@style/FullscreenTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".Result" />
         <activity android:name=".TestPage" />
@@ -29,7 +25,11 @@
         <activity android:name=".Register2" />
         <activity android:name=".Register1" />
         <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 
