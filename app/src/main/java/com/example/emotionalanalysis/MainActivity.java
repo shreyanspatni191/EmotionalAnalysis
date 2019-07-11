@@ -1,5 +1,6 @@
 package com.example.emotionalanalysis;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -16,6 +17,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,11 +36,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView textViewRegister;
     private Button buttonLogin;
     private ProgressDialog progressDialog;
+    private FirebaseAuth mAuth;
+// ...
+// Initialize Firebase Auth
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        mAuth = FirebaseAuth.getInstance();
+
 
         Typeface custom_font = Typeface.createFromAsset(getAssets(),"fonts/Lato-Light.ttf");
 
@@ -58,9 +72,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void userLogin(){
+
         final String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
-        if(retrofit == null){
+
+        //firebase
+        mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    FirebaseUser user = mAuth.getCurrentUser();
+                    if (user != null) {
+                        if (user.isEmailVerified()) {
+                            Toast.makeText(MainActivity.this,"Logged in successfully", Toast.LENGTH_SHORT).show();
+    //                        finish();
+    //                        startActivity(new Intent(getApplicationContext(), TestPage.class));
+                            Intent i = new Intent(MainActivity.this, TestPage.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("email",email);
+                            i.putExtras(bundle);
+                            startActivity(i);
+                            finish();
+                        } else {
+                            Toast.makeText(MainActivity.this,"Please verify your email first", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                } else {
+                    Toast.makeText(MainActivity.this,"Invalid Login Credentials", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
+        //firebase end
+
+
+        /*if(retrofit == null){
             retrofit = new Retrofit.Builder()
                     .baseUrl(Constants.ROOT_URL)
                     .addConverterFactory(GsonConverterFactory.create()).build();
@@ -81,8 +128,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     else{
 //                        Log.d("haga", "onResponse:");
                         Toast.makeText(MainActivity.this,"Invalid Login Credentials", Toast.LENGTH_SHORT).show();
-                        finish();
+
                         startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                        finish();
                     }
                 }
 
@@ -94,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             });
 
 
-        }
+        }*/
     }
     @Override
     public void onClick(View view) {
@@ -102,7 +150,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             userLogin();
         }
         else if(view == textViewRegister){
-            finish();
             startActivity(new Intent(getApplicationContext(),Register1.class));
         }
     }

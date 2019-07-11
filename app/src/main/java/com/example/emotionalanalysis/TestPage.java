@@ -53,7 +53,7 @@ public class TestPage extends AppCompatActivity implements View.OnClickListener{
 
         String starttime = f.format(new Date());
 
-        Intent i = new Intent(this, Session.class);
+        Intent i = new Intent(this, SliderActivity.class);
         Bundle goBundle = new Bundle();
 
         goBundle.putString("email",email);

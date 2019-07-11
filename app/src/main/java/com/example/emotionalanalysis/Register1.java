@@ -63,20 +63,18 @@ public class Register1 extends AppCompatActivity implements View.OnClickListener
 //        Log.d("HHHHH",userInfo.getUsername().toString().trim());
 
         Intent i = new Intent(this, Register2.class);
-        Bundle bundle = new Bundle();
-
-        bundle.putString("username", username);
-        bundle.putString("email",email);
-        bundle.putString("password",password);
-        bundle.putString("firstname",firstname);
-        bundle.putString("middlename",middlename);
-        bundle.putString("lastname",lastname);
+//        Bundle bundle = new Bundle();
+        i.putExtra("username", username);
+        i.putExtra("email",email);
+        i.putExtra("password",password);
+        i.putExtra("firstname",firstname);
+        i.putExtra("middlename",middlename);
+        i.putExtra("lastname",lastname);
 
 //        Add the bundle to the intent
-        i.putExtras(bundle);
+//        i.putExtras(bundle);
 
 //        Fire that second activity
-        finish();
         startActivity(i);
 //        startActivity(new Intent(getApplicationContext(),Register2.class));
 

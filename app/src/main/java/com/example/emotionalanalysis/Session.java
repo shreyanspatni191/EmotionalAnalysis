@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,6 +29,7 @@ public class Session extends AppCompatActivity {
     Retrofit retrofit;
     ViewPager viewPager;
     Timer timer = new Timer();
+    AtomicInteger index = new AtomicInteger(0);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 //        getActionBar().hide();
@@ -44,6 +46,17 @@ public class Session extends AppCompatActivity {
 
         timer.scheduleAtFixedRate(new MyTimerTask(),7000,7000);
     }
+
+    public class MyScheduledTask extends TimerTask {
+
+        @Override
+        public void run() {
+            if (index.get() % 2 == 0) {
+
+            }
+        }
+    }
+
 
     public class MyTimerTask extends TimerTask{
 
