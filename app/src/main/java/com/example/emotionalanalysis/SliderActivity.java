@@ -67,7 +67,7 @@ public class SliderActivity extends AppCompatActivity {
 //        timer.scheduleAtFixedRate(new MyTimerTask(),0,7000);
     }
 
-    public static int counter = 0 ;
+    public int counter = 0, id = 1;
     public String starttime, endtime, imgStartTime, imgEndTime;
     private class MyTask implements Runnable {
         private WeakReference<SliderActivity> activityRef;
@@ -84,7 +84,7 @@ public class SliderActivity extends AppCompatActivity {
                 starttime = f.format(new Date());
             }
             counter ++;
-            if(counter == 24){   //6 normal images
+            if(counter == 40){   //make 40 for 10 normal images
                 SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 f.setTimeZone(TimeZone.getTimeZone("UTC"));
                 endtime = f.format(new Date());
@@ -117,11 +117,12 @@ public class SliderActivity extends AppCompatActivity {
                     activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            int imageId = activity.random.nextInt(6) + 1;
-
+//                            int imageId = activity.random.nextInt(10) + 1;
+                            int imageId = id;
+                            id = id + 1;
                             String imageName = IMAGE_PREFIX + imageId + ".jpg"; //fetch from firebase
                             String imagename = IMAGE_PREFIX + imageId; //fetch from imageInfo
-
+                            Log.d("imagename",imagename);
                             final StorageReference imgRef = activity.storageRef.child(imageName);
                             GlideApp.with(activity).load(imgRef).into(activity.imageHolder);
 
@@ -204,6 +205,9 @@ public class SliderActivity extends AppCompatActivity {
         String testambience = bundle.getString("testambience");
         String watchno = bundle.getString("watchno");
 
+        if(String.valueOf(testplacedescription ).equals(""))testplacedescription = "-";
+        Log.d("motherboard",testplace + " " + testplacedescription + " " + testambience + " " + watchno);
+
         //retrofit
 
 //        if (retrofit == null) {
@@ -230,7 +234,7 @@ public class SliderActivity extends AppCompatActivity {
             });
 
             Log.d(TAG, "store: OutStore");
-            startActivity(new Intent(getApplicationContext(), Result.class));
+            startActivity(new Intent(SliderActivity.this, Result.class));
             finish();
 //        }
     }

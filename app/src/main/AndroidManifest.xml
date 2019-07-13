@@ -11,14 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".IntroActivity"></activity>
         <activity
             android:name=".SliderActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_slider"
             android:screenOrientation="landscape"
-            android:theme="@style/FullscreenTheme">
-
-        </activity>
+            android:theme="@style/FullscreenTheme"></activity>
         <activity android:name=".Result" />
         <activity android:name=".TestPage" />
         <activity android:name=".Session" />

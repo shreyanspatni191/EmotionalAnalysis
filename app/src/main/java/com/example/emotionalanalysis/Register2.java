@@ -5,16 +5,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.provider.SyncStateContract;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import retrofit2.Call;
@@ -37,13 +40,13 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-public class Register2 extends AppCompatActivity implements View.OnClickListener{
+public class Register2 extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     private static final String TAG = "Register2";
     Retrofit retrofit;
     AutoCompleteTextView textView;
-    private EditText editTextAge, editTextGender, editTextWeight, editTextHeight, editTextCountry;
+    private EditText editTextAge, editTextWeight, editTextHeight;
     private Button buttonRegister;
-
+    private Spinner editTextGender,editTextCountry;
     private ProgressDialog progressDialog;
 
     private FirebaseAuth mAuth;
@@ -55,16 +58,41 @@ public class Register2 extends AppCompatActivity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register2);
 
+        Typeface custom_font = Typeface.createFromAsset(getAssets(),"fonts/Lato-Light.ttf");
+
+        final String[] paths = {"Male","Female","Other"};
+        final String[] paths1 = {"India","USA","Norway","Other"};
         mAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
         editTextAge = (EditText)findViewById(R.id.editTextAge);
-        editTextGender = (EditText)findViewById(R.id.editTextGender);
-        editTextWeight = (EditText)findViewById(R.id.editTextWeight);
-        editTextHeight = (EditText)findViewById(R.id.editTextHeight);
+        editTextAge.setTypeface(custom_font);
+//        editTextGender = (EditText)findViewById(R.id.editTextGender);
 
-        editTextCountry = (AutoCompleteTextView)findViewById(R.id.editTextCountry);
-        textView = (AutoCompleteTextView) findViewById(R.id.editTextCountry);
+        editTextGender = (Spinner) findViewById(R.id.editTextGender);
+//        editTextTestPlace.setTypeface(custom_font);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(Register2.this,
+                android.R.layout.simple_spinner_item,paths);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        editTextGender.setAdapter(adapter);
+        editTextGender.setOnItemSelectedListener(this);
+
+        editTextWeight = (EditText)findViewById(R.id.editTextWeight);
+        editTextWeight.setTypeface(custom_font);
+
+        editTextHeight = (EditText)findViewById(R.id.editTextHeight);
+        editTextHeight.setTypeface(custom_font);
+
+        editTextCountry = (Spinner)findViewById(R.id.editTextCountry);
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(Register2.this,
+                android.R.layout.simple_spinner_item,paths1);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        editTextCountry.setAdapter(adapter1);
+        editTextCountry.setOnItemSelectedListener(this);
+//        textView = (AutoCompleteTextView) findViewById(R.id.editTextCountry);
 
         intent = getIntent();
 
@@ -113,7 +141,7 @@ public class Register2 extends AppCompatActivity implements View.OnClickListener
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(Register2.this, "Email address already registered", Toast.LENGTH_SHORT).show();
-                SystemClock.sleep(1000);
+                SystemClock.sleep(3000);
                 startActivity(new Intent(Register2.this, MainActivity.class));
                 finish();
             }
@@ -130,15 +158,17 @@ public class Register2 extends AppCompatActivity implements View.OnClickListener
 
     private void storeDetails(String email, String password) {
         String age = editTextAge.getText().toString().trim();
-        String gender = editTextGender.getText().toString().trim();
-        if(gender.contains("male"))gender = "1";
-        else gender = "2";
+        String gender = editTextGender.getSelectedItem().toString().trim();
+        if(gender.contains("Male"))gender = "1";
+        else if(gender.contains("Female"))gender = "2";
+        else gender = "3";
         String weight = editTextWeight.getText().toString().trim();
         String height = editTextHeight.getText().toString().trim();
-        String country = editTextCountry.getText().toString().trim();
-        if(country.contains("India") || country.contains("india"))country = "1";
-        else if(country.contains("USA") || country.contains("usa") || country.contains("America"))country = "2";
-        else country = "3";
+        String country = editTextCountry.getSelectedItem().toString().trim();
+        if(country.contains("India"))country = "1";
+        else if(country.contains("USA"))country = "2";
+        else if(country.contains("Norway"))country = "3";
+        else country = "4";
 //      UserInfo userInfo = new UserInfo();
         String username = intent.getStringExtra("username");
         String firstname = intent.getStringExtra("firstname");
@@ -146,8 +176,8 @@ public class Register2 extends AppCompatActivity implements View.OnClickListener
         String lastname = intent.getStringExtra("lastname");
 
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line, COUNTRIES);
-        textView.setAdapter(adapter);
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line, COUNTRIES);
+//        textView.setAdapter(adapter);
 
 
         if(retrofit==null) {
@@ -187,5 +217,15 @@ public class Register2 extends AppCompatActivity implements View.OnClickListener
         if(view == buttonRegister){
             registerUser();
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }

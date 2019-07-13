@@ -74,7 +74,7 @@
                     android:layout_gravity="center"/>
 
 
-                <EditText
+                <Spinner
                     android:id="@+id/editTextGender"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -105,7 +105,7 @@
                     android:id="@+id/editTextWeight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Weight"
+                    android:hint="Weight in kgs"
                     android:textColorHint="#fff"
                     android:layout_marginLeft="15dp"
                     android:background="#00000000"
@@ -134,7 +134,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:background="#00000000"
-                    android:hint="Height"
+                    android:hint="Height in cms"
                     android:inputType="text"
                     android:letterSpacing="0.1"
                     android:textColor="#fff"
@@ -152,10 +152,11 @@
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/ageicon"
                     android:layout_gravity="center"/>
 
-                <AutoCompleteTextView
+                <!--android:src="@drawable/ageicon"-->
+
+                <Spinner
                     android:id="@+id/editTextCountry"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

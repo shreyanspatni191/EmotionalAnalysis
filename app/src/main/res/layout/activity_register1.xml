@@ -78,7 +78,7 @@
                     android:id="@+id/editTextPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Password"
+                    android:hint="Password (atleast 6 chars)"
                     android:textColorHint="#fff"
                     android:layout_marginLeft="15dp"
                     android:background="#00000000"

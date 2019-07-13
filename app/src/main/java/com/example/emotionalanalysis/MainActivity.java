@@ -75,6 +75,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         final String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
+        Log.d("looo", email + password);
+
+        //isEmpty
+
+        /*
+        if(email.isEmpty()){
+            Log.d("Khali", "userLogin: Hi");
+            Toast.makeText(MainActivity.this, "Email cannot be empty", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(MainActivity.this, MainActivity.class));
+            finish();
+        }
+        if(password.isEmpty()){
+            Toast.makeText(MainActivity.this, "Password cannot be empty", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(MainActivity.this, MainActivity.class));
+            finish();
+        }
+        if(password.length() < 6){
+            Toast.makeText(MainActivity.this, "Password must have more than 6 characters", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(MainActivity.this, MainActivity.class));
+            finish();
+        }*/
+
+
 
         //firebase
         mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {

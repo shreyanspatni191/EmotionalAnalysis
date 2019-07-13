@@ -58,6 +58,7 @@ public class Register1 extends AppCompatActivity implements View.OnClickListener
         String firstname = editTextFirstname.getText().toString().trim();
         String middlename = editTextMiddlename.getText().toString().trim();
         String lastname = editTextLastname.getText().toString().trim();
+        if(String.valueOf(middlename ).equals(""))middlename = "-";
 
         UserInfo userInfo = new UserInfo(username, email, password, firstname, middlename, lastname);
 //        Log.d("HHHHH",userInfo.getUsername().toString().trim());
